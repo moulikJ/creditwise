@@ -35,7 +35,7 @@ export function Header({ user }: { user: { name: string; role: string } | null }
           <span className="text-[15px]">CreditWise</span>
         </Link>
         <span className="hidden text-xs text-muted sm:inline">
-          Created by <span className="font-medium text-fg-2">Moulik Jindal</span>
+          Created by <span className="font-medium text-fg-2">Moulik Jindals</span>
         </span>
 
         {/* Desktop nav inline */}
