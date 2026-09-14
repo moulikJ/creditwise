@@ -36,11 +36,7 @@ export default function HomePage() {
     <Shell>
       {/* Hero */}
       <section className="grid items-center gap-8 py-6 md:grid-cols-2 md:py-12">
-        <div
-          style={{
-            animation: "fadeIn 0.7s ease-out both",
-          }}
-        >
+        <div style={{ animation: "fadeIn 0.7s ease-out both" }}>
           <span className="text-xs font-semibold uppercase tracking-wider text-brand">
             Credit card intelligence
           </span>
@@ -62,7 +58,6 @@ export default function HomePage() {
             <Button href="/recommend" size="lg">
               Get my recommendation
             </Button>
-
             <Button href="/explore" size="lg" variant="secondary">
               Browse all cards
             </Button>
@@ -73,13 +68,11 @@ export default function HomePage() {
             className="mt-6 flex max-w-md items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2 transition-all duration-300 focus-within:border-brand focus-within:shadow-md"
           >
             <span className="text-muted">⌕</span>
-
             <input
               name="q"
               placeholder="Search by bank or card name…"
               className="flex-1 bg-transparent text-sm outline-none"
             />
-
             <button className="rounded-lg bg-brand px-3 py-1.5 text-sm font-medium text-brand-fg transition-all duration-200 hover:scale-105 active:scale-95">
               Search
             </button>
@@ -102,9 +95,7 @@ export default function HomePage() {
             >
               <div
                 className="transition-all duration-500 hover:-translate-y-4 hover:scale-105"
-                style={{
-                  transform: `rotate(${i * 3 - 4}deg)`,
-                }}
+                style={{ transform: `rotate(${i * 3 - 4}deg)` }}
               >
                 <CardArt card={c} className="h-44 w-72" />
               </div>
@@ -116,7 +107,6 @@ export default function HomePage() {
       {/* Categories */}
       <section className="mt-8">
         <h2 className="text-lg font-semibold">Browse by category</h2>
-
         <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {counts.map(({ cat, n }, i) => (
             <Link
@@ -131,13 +121,10 @@ export default function HomePage() {
               <div className="text-2xl transition-transform duration-300 group-hover:scale-125">
                 {CAT_META[cat]?.icon}
               </div>
-
               <div className="mt-2 font-medium">{cat}</div>
-
               <div className="text-xs text-muted">
                 {CAT_META[cat]?.blurb}
               </div>
-
               <div className="mt-2 text-xs text-brand transition-transform duration-300 group-hover:translate-x-1">
                 {n} cards →
               </div>
@@ -150,7 +137,6 @@ export default function HomePage() {
       <section className="mt-10">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-semibold">Featured cards</h2>
-
           <Link
             href="/explore"
             className="text-sm text-brand transition-all duration-200 hover:translate-x-1"
@@ -158,7 +144,6 @@ export default function HomePage() {
             See all →
           </Link>
         </div>
-
         <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {featured.map((c, i) => (
             <Link
@@ -175,16 +160,12 @@ export default function HomePage() {
                   <CardArt card={c} className="h-28 w-full" />
                 </div>
               </div>
-
               <div className="mt-3 font-medium">{c.name}</div>
-
               <div className="text-xs text-muted">{c.bank}</div>
-
               <div className="mt-2 flex items-center justify-between text-sm">
                 <span className="text-fg-2">
                   {c.annualFee ? inr(c.annualFee) + "/yr" : "Free"}
                 </span>
-
                 <span className="font-medium text-pos transition-transform duration-200 group-hover:scale-105">
                   {(c.baseRate * 100).toFixed(1)}%+ back
                 </span>
@@ -225,9 +206,7 @@ export default function HomePage() {
             <div className="font-medium transition-transform duration-200 group-hover:translate-x-1">
               {x.t}
             </div>
-
             <div className="mt-1 text-sm text-fg-2">{x.d}</div>
-
             <div className="mt-3 text-xs text-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100">
               Explore →
             </div>
