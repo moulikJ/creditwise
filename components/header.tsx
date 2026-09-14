@@ -28,17 +28,15 @@ export function Header({ user }: { user: { name: string; role: string } | null }
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
-      {/* Top row: brand + credit + actions */}
       <div className="mx-auto flex h-14 max-w-7xl items-center gap-3 px-3 sm:px-6">
         <Link href="/" className="flex shrink-0 items-center gap-2 font-semibold">
           <span className="grid h-6 w-6 place-items-center rounded-md bg-brand text-brand-fg text-sm">C</span>
           <span className="text-[15px]">CreditWise</span>
         </Link>
         <span className="hidden text-xs text-muted sm:inline">
-          Created by <span className="font-medium text-fg-2">Moulik Jindals</span>
+          Created by <span className="font-medium text-fg-2">Moulik Jindal</span>
         </span>
 
-        {/* Desktop nav inline */}
         <nav className="ml-4 hidden items-center gap-1 md:flex">
           {NAV.map((n) => {
             const active = path === n.href || path.startsWith(n.href + "/");
@@ -68,7 +66,6 @@ export function Header({ user }: { user: { name: string; role: string } | null }
         </div>
       </div>
 
-      {/* Mobile nav: always visible, horizontally scrollable — no hamburger */}
       <nav className="flex gap-1 overflow-x-auto border-t border-line px-3 py-2 md:hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {NAV.map((n) => {
           const active = path === n.href || path.startsWith(n.href + "/");
