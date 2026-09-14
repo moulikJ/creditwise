@@ -79,9 +79,9 @@ export default function HomePage() {
       <ScrollReveal>
         <section className="mt-8">
           <h2 className="text-lg font-semibold">Browse by category</h2>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {counts.map(({ cat, n }, i) => (
-              <Link key={cat} href={`/explore?category=${encodeURIComponent(cat)}`} className="group rounded-xl border border-line bg-surface p-4 transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg" style={{ transitionDelay: `${i * 45}ms` }}>
+          <div className="scroll-pop-grid mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {counts.map(({ cat, n }) => (
+              <Link key={cat} href={`/explore?category=${encodeURIComponent(cat)}`} className="group rounded-xl border border-line bg-surface p-4 transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg">
                 <div className="text-2xl transition-transform duration-300 group-hover:scale-125">{CAT_META[cat]?.icon}</div>
                 <div className="mt-2 font-medium">{cat}</div>
                 <div className="text-xs text-muted">{CAT_META[cat]?.blurb}</div>
@@ -98,7 +98,7 @@ export default function HomePage() {
             <h2 className="text-lg font-semibold">Featured cards</h2>
             <Link href="/explore" className="text-sm text-brand transition-all duration-200 hover:translate-x-1">See all →</Link>
           </div>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="scroll-pop-grid mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((c) => (
               <Link key={c.id} href={`/card/${c.slug}`} className="group rounded-xl border border-line bg-surface p-4 transition-all duration-300 hover:-translate-y-2 hover:border-brand hover:shadow-xl">
                 <div className="overflow-hidden rounded-lg"><div className="transition-transform duration-500 group-hover:scale-105"><CardArt card={c} className="h-28 w-full" /></div></div>
@@ -112,14 +112,16 @@ export default function HomePage() {
       </ScrollReveal>
 
       <ScrollReveal>
-        <section className="mt-12 grid gap-4 sm:grid-cols-3">
-          {[{ t: "Smart Recommendation", d: "Enter your spend; get ranked cards with built-in reward maths.", href: "/recommend" }, { t: "Side-by-side Compare", d: "Put up to 3 cards head-to-head.", href: "/compare" }, { t: "Learn the basics", d: "Plain-English guides on scores, fees and mistakes.", href: "/learn" }].map((x) => (
-            <Link key={x.href} href={x.href} className="group rounded-xl border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg">
-              <div className="font-medium transition-transform duration-200 group-hover:translate-x-1">{x.t}</div>
-              <div className="mt-1 text-sm text-fg-2">{x.d}</div>
-              <div className="mt-3 text-xs text-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100">Explore →</div>
-            </Link>
-          ))}
+        <section className="mt-12">
+          <div className="scroll-pop-grid grid gap-4 sm:grid-cols-3">
+            {[{ t: "Smart Recommendation", d: "Enter your spend; get ranked cards with built-in reward maths.", href: "/recommend" }, { t: "Side-by-side Compare", d: "Put up to 3 cards head-to-head.", href: "/compare" }, { t: "Learn the basics", d: "Plain-English guides on scores, fees and mistakes.", href: "/learn" }].map((x) => (
+              <Link key={x.href} href={x.href} className="group rounded-xl border border-line bg-surface p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand hover:shadow-lg">
+                <div className="font-medium transition-transform duration-200 group-hover:translate-x-1">{x.t}</div>
+                <div className="mt-1 text-sm text-fg-2">{x.d}</div>
+                <div className="mt-3 text-xs text-brand opacity-0 transition-opacity duration-300 group-hover:opacity-100">Explore →</div>
+              </Link>
+            ))}
+          </div>
         </section>
       </ScrollReveal>
     </Shell>
