@@ -19,7 +19,12 @@ export default function HomePage() {
   const cards = cardRepo.all();
 
   const featured = cards.filter((c) =>
-    ["amazon-pay-icici", "hdfc-millennia", "scapia-federal", "axis-atlas"].includes(c.id)
+    [
+      "amazon-pay-icici",
+      "hdfc-millennia",
+      "scapia-federal",
+      "axis-atlas",
+    ].includes(c.id)
   );
 
   const counts = CARD_CATEGORIES.map((cat) => ({
@@ -31,7 +36,11 @@ export default function HomePage() {
     <Shell>
       {/* Hero */}
       <section className="grid items-center gap-8 py-6 md:grid-cols-2 md:py-12">
-        <div className="animate-[fadeIn_0.7s_ease-out]">
+        <div
+          style={{
+            animation: "fadeIn 0.7s ease-out both",
+          }}
+        >
           <span className="text-xs font-semibold uppercase tracking-wider text-brand">
             Credit card intelligence
           </span>
@@ -77,29 +86,28 @@ export default function HomePage() {
           </form>
         </div>
 
-       {/* Hero Cards */}
-<div className="relative hidden h-72 md:block">
-  {featured.map((c, i) => (
-    <div
-      key={c.id}
-      className="absolute"
-      style={{
-        left: `${i * 70}px`,
-        top: `${i * 34}px`,
-        zIndex: i,
-        transform: `rotate(${i * 3 - 4}deg)`,
-        animation: "cardEnter 0.7s ease-out both",
-        animationDelay: `${i * 180}ms`,
-      }}
-    >
-      <div className="transition-all duration-500 hover:-translate-y-4 hover:scale-105 hover:rotate-1">
-        <CardArt card={c} className="h-44 w-72" />
-      </div>
-    </div>
-  ))}
-</div>
+        {/* Animated Hero Cards */}
+        <div className="relative hidden h-72 md:block">
+          {featured.map((c, i) => (
+            <div
+              key={c.id}
+              className="absolute"
+              style={{
+                left: `${i * 70}px`,
+                top: `${i * 34}px`,
+                zIndex: i,
+                animation: "cardEnter 0.8s ease-out both",
+                animationDelay: `${i * 200}ms`,
+              }}
             >
-              <CardArt card={c} className="h-44 w-72" />
+              <div
+                className="transition-all duration-500 hover:-translate-y-4 hover:scale-105"
+                style={{
+                  transform: `rotate(${i * 3 - 4}deg)`,
+                }}
+              >
+                <CardArt card={c} className="h-44 w-72" />
+              </div>
             </div>
           ))}
         </div>
