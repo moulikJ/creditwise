@@ -45,57 +45,65 @@ table { border-collapse: collapse; }
 ::-webkit-scrollbar { height: 10px; width: 10px; }
 ::-webkit-scrollbar-thumb { background: var(--color-line); border-radius: 99px; }
 
-/* Native scroll-driven reveal: the content physically rises into place as it enters the viewport. */
-.scroll-reveal {
-  opacity: 0;
-  transform: translate3d(0, 90px, 0) scale(0.94);
-  filter: blur(7px);
-  will-change: opacity, transform, filter;
-  animation: scroll-section-reveal linear both;
-  animation-timeline: view();
-  animation-range: entry 0% cover 34%;
-  animation-delay: var(--reveal-delay, 0ms);
-}
-
-@keyframes scroll-section-reveal {
-  from {
-    opacity: 0;
-    transform: translate3d(0, 90px, 0) scale(0.94);
-    filter: blur(7px);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
-  }
-}
-
-/* Cards use their own scroll timeline so they pop independently as they enter. */
+/* Default fallback: never hide content if the browser does not support scroll timelines. */
+.scroll-reveal,
 .scroll-pop-grid > * {
-  opacity: 0;
-  transform: translate3d(0, 55px, 0) scale(0.88);
-  filter: blur(4px);
-  will-change: opacity, transform, filter;
-  animation: scroll-card-pop linear both;
-  animation-timeline: view();
-  animation-range: entry 0% cover 28%;
+  opacity: 1;
+  transform: none;
+  filter: none;
 }
 
-@keyframes scroll-card-pop {
-  from {
+/* Native CSS scroll-driven animation. No JavaScript observer is involved. */
+@supports (animation-timeline: view()) {
+  .scroll-reveal {
     opacity: 0;
-    transform: translate3d(0, 55px, 0) scale(0.88);
-    filter: blur(4px);
+    transform: translate3d(0, 96px, 0) scale(0.93);
+    filter: blur(8px);
+    will-change: opacity, transform, filter;
+    animation: scroll-section-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
   }
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
-    filter: blur(0);
-  }
-}
 
-.scroll-pop-grid > *:hover {
-  transform: translate3d(0, -6px, 0) scale(1.01);
+  @keyframes scroll-section-reveal {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 96px, 0) scale(0.93);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  .scroll-pop-grid > * {
+    opacity: 0;
+    transform: translate3d(0, 64px, 0) scale(0.86);
+    filter: blur(5px);
+    will-change: opacity, transform, filter;
+    animation: scroll-card-pop linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 100%;
+  }
+
+  @keyframes scroll-card-pop {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 64px, 0) scale(0.86);
+      filter: blur(5px);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  .scroll-pop-grid > *:hover {
+    transform: translate3d(0, -6px, 0) scale(1.01);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
