@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 type ScrollRevealProps = {
   children: ReactNode;
@@ -14,7 +14,7 @@ export function ScrollReveal({
   return (
     <div
       className={`scroll-reveal ${className}`}
-      style={{ "--reveal-delay": `${delay}ms` } as React.CSSProperties}
+      style={{ "--reveal-delay": `${delay}ms` } as CSSProperties}
     >
       {children}
     </div>
