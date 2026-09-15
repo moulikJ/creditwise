@@ -16,12 +16,21 @@ const CAT_META: Record<string, { icon: string; blurb: string }> = {
   "Co-brand": { icon: "🤝", blurb: "Brand-specific accelerators" },
 };
 
+const VERIFIED_IDS = [
+  "hdfc-pixel-play",
+  "hdfc-swiggy",
+  "airtel-axis",
+  "axis-cashback",
+  "scapia-axis",
+];
+
 export default function HomePage() {
   const cards = cardRepo.all();
 
   const featured = cards.filter((c) =>
     ["amazon-pay-icici", "hdfc-millennia", "scapia-federal", "axis-atlas"].includes(c.id)
   );
+  const verifiedCards = cards.filter((c) => VERIFIED_IDS.includes(c.id));
 
   const counts = CARD_CATEGORIES.map((cat) => ({
     cat,
@@ -105,6 +114,34 @@ export default function HomePage() {
                 <div className="mt-3 font-medium">{c.name}</div>
                 <div className="text-xs text-muted">{c.bank}</div>
                 <div className="mt-2 flex items-center justify-between text-sm"><span className="text-fg-2">{c.annualFee ? inr(c.annualFee) + "/yr" : "Free"}</span><span className="font-medium text-pos transition-transform duration-200 group-hover:scale-105">{(c.baseRate * 100).toFixed(1)}%+ back</span></div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal>
+        <section className="mt-10 rounded-2xl border border-brand/20 bg-brand-soft/40 p-5 md:p-6">
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div>
+              <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-brand/20 bg-surface px-3 py-1 text-xs font-semibold text-brand">
+                <span className="h-1.5 w-1.5 rounded-full bg-pos" /> Official-source checked
+              </div>
+              <h2 className="text-xl font-semibold">5 new cards, verified from issuer pages</h2>
+              <p className="mt-1 max-w-2xl text-sm text-fg-2">
+                Benefits and fees below were checked against the banks&apos; official card pages on September 15, 2026. Terms can change, so every card links back to its issuer source.
+              </p>
+            </div>
+            <Link href="/explore" className="text-sm font-medium text-brand">Explore all {cards.length} cards →</Link>
+          </div>
+          <div className="scroll-pop-grid mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {verifiedCards.map((c) => (
+              <Link key={c.id} href={`/card/${c.slug}`} className="group rounded-xl border border-line bg-surface p-3 transition-all duration-300 hover:-translate-y-2 hover:border-brand hover:shadow-xl">
+                <div className="overflow-hidden rounded-lg"><div className="transition-transform duration-500 group-hover:scale-105"><CardArt card={c} className="h-24 w-full" /></div></div>
+                <div className="mt-3 text-sm font-semibold">{c.name}</div>
+                <div className="text-xs text-muted">{c.bank}</div>
+                <div className="mt-2 text-xs text-fg-2">{c.annualFee ? inr(c.annualFee) + "/yr" : "Lifetime free"}</div>
+                <div className="mt-2 text-xs font-medium text-pos">Verified ✓</div>
               </Link>
             ))}
           </div>
