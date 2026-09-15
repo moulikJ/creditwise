@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { CARDS as SEED_CARDS, ARTICLES as SEED_ARTICLES } from "./seed";
+import { VERIFIED_CARDS } from "./verified-cards";
 import { CreditCard, User, Favorite, RecommendationRecord, AnalyticsEvent } from "./types";
 
 // ============================================================================
@@ -11,8 +12,6 @@ import { CreditCard, User, Favorite, RecommendationRecord, AnalyticsEvent } from
 // any host for demo). To move to Postgres/SQLite later, replace ONLY the
 // bodies below with SQL queries — the rest of the app imports these functions
 // and never touches storage directly.
-//
-// A matching SQL schema (DDL) lives in /db/schema.sql for reference.
 // ============================================================================
 
 interface DB {
@@ -22,6 +21,8 @@ interface DB {
   recommendations: RecommendationRecord[];
   events: AnalyticsEvent[];
 }
+
+const ALL_CARDS = [...SEED_CARDS, ...VERIFIED_CARDS];
 
 // On Vercel/serverless the project dir is read-only; only /tmp is writable.
 const WRITABLE_BASE = process.env.VERCEL ? "/tmp" : process.cwd();
@@ -35,14 +36,14 @@ function load(): DB {
   try {
     if (fs.existsSync(DATA_FILE)) {
       _db = JSON.parse(fs.readFileSync(DATA_FILE, "utf8")) as DB;
-      // ensure cards stay in sync with the seed (cards are source-controlled, not user data)
-      _db.cards = SEED_CARDS;
+      // Cards are source-controlled static data, not user data.
+      _db.cards = ALL_CARDS;
       return _db;
     }
   } catch {
     // fall through to fresh seed
   }
-  _db = { cards: SEED_CARDS, users: [], favorites: [], recommendations: [], events: [] };
+  _db = { cards: ALL_CARDS, users: [], favorites: [], recommendations: [], events: [] };
   persist();
   return _db;
 }
@@ -51,7 +52,6 @@ function persist() {
   if (!_db) return;
   try {
     if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
-    // don't write the (large, static) card list — keep file small
     const { cards, ...rest } = _db;
     void cards;
     fs.writeFileSync(DATA_FILE, JSON.stringify(rest, null, 2));
@@ -82,7 +82,6 @@ export const cardRepo = {
   banks(): string[] {
     return [...new Set(load().cards.map((c) => c.bank))].sort();
   },
-  // admin mutations (in-memory + persisted only if writable)
   upsert(card: CreditCard) {
     const db = load();
     const i = db.cards.findIndex((c) => c.id === card.id);
@@ -149,7 +148,6 @@ export const analyticsRepo = {
   track(e: Omit<AnalyticsEvent, "id" | "createdAt">) {
     const db = load();
     db.events.push({ ...e, id: uid("evt"), createdAt: new Date().toISOString() });
-    // cap event log size for the demo
     if (db.events.length > 5000) db.events = db.events.slice(-5000);
     persist();
   },
