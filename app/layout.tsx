@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeScript } from "@/components/theme-script";
 
 export const metadata: Metadata = {
@@ -21,7 +22,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className="h-full antialiased" suppressHydrationWarning>
       <head><ThemeScript /></head>
-      <body className="min-h-full flex flex-col bg-bg text-fg">{children}</body>
+      <body className="min-h-full flex flex-col bg-bg text-fg">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
