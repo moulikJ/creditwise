@@ -53,22 +53,30 @@ export default function HomePage() {
         </ScrollReveal>
 
         <ScrollReveal className="relative hidden md:block" delay={120}>
-          <div className="relative mx-auto max-w-xl rounded-3xl border border-line bg-surface p-5 shadow-2xl shadow-black/5">
-            <div className="flex items-center justify-between border-b border-line pb-4">
-              <div><div className="text-xs font-semibold uppercase tracking-wider text-muted">How CreditWise thinks</div><div className="mt-1 text-lg font-semibold">Your spending → your real value</div></div>
-              <span className="rounded-full bg-pos-soft px-2.5 py-1 text-xs font-semibold text-pos">Calculated</span>
-            </div>
-            <div className="mt-5 space-y-3">
-              {[{ n: "01", t: "Understand your spend", d: "Shopping · dining · travel · bills", icon: "₹" }, { n: "02", t: "Calculate rewards", d: "Rewards minus annual fees", icon: "×" }, { n: "03", t: "Show your shortlist", d: "Cards ranked by your estimated value", icon: "✓" }].map((x, i) => (
-                <div key={x.n} className="flex items-center gap-3 rounded-2xl border border-line bg-bg p-3.5 transition hover:-translate-y-0.5 hover:border-brand/40">
-                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-brand-soft font-semibold text-brand">{x.icon}</div>
-                  <div className="min-w-0 flex-1"><div className="text-xs font-semibold text-muted">{x.n}</div><div className="font-medium">{x.t}</div><div className="text-xs text-fg-2">{x.d}</div></div>
-                  {i < 2 && <div className="hidden text-muted sm:block">↓</div>}
+          <div className="relative mx-auto h-[390px] max-w-xl">
+            <div className="pointer-events-none absolute inset-x-0 top-0 h-[330px] overflow-hidden rounded-3xl border border-line bg-surface shadow-2xl shadow-black/5">
+              {featured.map((c, i) => (
+                <div
+                  key={c.id}
+                  className="absolute"
+                  style={{
+                    left: `${16 + i * 74}px`,
+                    top: `${38 + i * 28}px`,
+                    zIndex: i + 1,
+                  }}
+                >
+                  <div
+                    className="transition-transform duration-500 hover:-translate-y-3 hover:scale-105"
+                    style={{ transform: `rotate(${i * 2 - 3}deg)` }}
+                  >
+                    <CardArt card={c} className="h-44 w-72" />
+                  </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 rounded-2xl bg-brand p-4 text-brand-fg shadow-lg">
-              <div className="flex items-end justify-between gap-4"><div><div className="text-xs opacity-75">Example annual net value</div><div className="mt-1 text-2xl font-semibold">₹18,420</div></div><div className="text-right text-xs opacity-80">after fees<br />for your spend</div></div>
+            <div className="absolute bottom-0 right-0 z-20 w-[270px] rounded-2xl border border-line bg-surface/95 p-4 shadow-xl backdrop-blur">
+              <div className="text-xs text-muted">Start with your spending</div>
+              <div className="mt-1 font-semibold">Get a ranked shortlist in minutes</div>
             </div>
           </div>
         </ScrollReveal>
